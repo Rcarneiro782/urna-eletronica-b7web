@@ -32,8 +32,35 @@ function comecaretapa() {
     numeros.innerHTML = numerohtml;
 }
 function atualizainterface() {
-    alert("FINALIZOU DE DIGITAR O VOTO!");
-}
+    let etapa = etapas[etapaatual];
+    let candidato = etapa.candidatos.filter((item) => {
+        if (item.numero === numero) {
+            return true;
+        } else {
+            return false
+        }
+    });
+    if (candidato.length > 0) {
+        candidato = candidato[0];
+        seuvotopara.style.display = 'block';
+        aviso.style.display = 'block';
+        descricao.innerHTML = `Nome:${candidato.nome}</br> Partido: ${candidato.partido}`;
+
+        let fotoshtml = '';
+        for (let i in candidato.fotos) {
+            fotoshtml += `<div class="d-1-image"><img src="imagens/${candidato.fotos[i].URL}" alt=""/>${candidato.fotos[i].legenda}</div>`;
+        }
+
+        lateral.innerHTML = fotoshtml;
+    }else {
+            seuvotopara.style.display = 'block';
+            aviso.style.display = 'block';
+            descricao.innerHTML = '<div class="aviso-grande pisca">VOTO NULO</div>';
+        }
+
+    }
+
+
 
 
 function clicou(n) {
@@ -43,9 +70,9 @@ function clicou(n) {
         numero = `${numero}${n}`;
 
         elnumero.classList.remove('pisca');
-        if(elnumero.nextElementSibling !== null){
-        elnumero.nextElementSibling.classList.add('pisca');
-        }else{
+        if (elnumero.nextElementSibling !== null) {
+            elnumero.nextElementSibling.classList.add('pisca');
+        } else {
             atualizainterface();
         }
 
